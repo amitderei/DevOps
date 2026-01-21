@@ -1,5 +1,5 @@
 import unittest
-from sumNumbers import sumNun
+from sumNumbers import sumNum
 
 
 class TestSumNun(unittest.TestCase):
