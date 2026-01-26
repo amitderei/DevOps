@@ -1,0 +1,21 @@
+---
+- name: Backup script (slide 48)
+  hosts: myhosts #inventory group 
+
+  tasks:
+      #create folder with timestamp and copy the content of personal folder to backup_archive_$timestamp
+    - name: Open new folder and Copy the content of personal folder to backup backup_archive_
+      # | to run more than one command
+      #Directory is a variable with the path of the backup_archive_$timestamp
+      #Linux command. creates new folder in the path of DIRECTORY (with name backup_archive_$(date +%Y%m%d_%H%M%S))
+      #Linux command. copy in archive mode (save all the properties of files) from /home/ubadmin/personal_folder to DIRECTORY (backup_archive_$(date +%Y%m%d_%H%M%S))
+      shell: | 
+        DIRECTORY=/home/ubadmin/backup_archive_$(date +%Y%m%d_%H%M%S) 
+        mkdir "$DIRECTORY"
+        cp -a /home/ubadmin/personal_folder "$DIRECTORY"
+    #select all the backup folders (everything except 3 last) and delete them
+    - name: Select old backups (except the 3 last) and delete them
+      # | to run more than one command
+      #List all the backup_archive_* (newest first) | take the output from the last command from line 4 | take the names of folders and force them to remove
+      shell: | 
+        ls -dt /home/ubadmin/backup_archive_* | tail -n +4 | xargs rm -rf

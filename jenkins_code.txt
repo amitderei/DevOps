@@ -1,0 +1,10 @@
+#print a welcome message to the console (1)
+echo "welcome!"
+# Python is already installed during the initial setup because Jenkins is running inside Docker,
+# so this step only checks/simulates the installation (2)
+apt-get -s install python3
+#check that Python is installed and print its version
+python3 --version
+# Jenkins performs git clone automatically (3)
+#run unit test
+python3 test_sum.py
